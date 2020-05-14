@@ -13,6 +13,31 @@ import { LoginComponent } from './login/login.component';
 import { ScoreComponent } from './score/score.component';
 import { ExitComponent } from './exit/exit.component';
 import { RegisterComponent } from './register/register.component';
+import { Routes, RouterModule } from '@angular/router';
+import { StudentComponent } from './student/student.component';
+
+
+//创建二级路由，登录成功后management的子路由,需要放在一级路由上面
+const managementChildRoutes: Routes = [
+  { path: 'student', component: StudentComponent },
+  { path: 'score', component: ScoreComponent },
+  { path: 'exit', component: ExitComponent },
+  { path: '', redirectTo: 'student', pathMatch: 'full' }
+];
+
+// 创建一级路由
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'introduce', component: IntroduceComponent },
+  { path: 'update-log', component: UpdateLogComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'management', component: ManagementComponent, children: managementChildRoutes }
+];
+
+
 
 @NgModule({
   declarations: [
@@ -26,11 +51,12 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     ScoreComponent,
     ExitComponent,
-    RegisterComponent
+    RegisterComponent,
+    StudentComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    RouterModule.forRoot(routes) // 引入路由模块
   ],
   providers: [],
   bootstrap: [AppComponent]
