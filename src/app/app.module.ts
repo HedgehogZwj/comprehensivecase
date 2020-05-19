@@ -15,6 +15,7 @@ import { ExitComponent } from './exit/exit.component';
 import { RegisterComponent } from './register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { StudentComponent } from './student/student.component';
+import { EndComponent } from './end/end.component';
 
 
 //创建二级路由，登录成功后management的子路由,需要放在一级路由上面
@@ -52,7 +53,8 @@ const routes: Routes = [
     ScoreComponent,
     ExitComponent,
     RegisterComponent,
-    StudentComponent
+    StudentComponent,
+    EndComponent
   ],
   imports: [
     BrowserModule,
