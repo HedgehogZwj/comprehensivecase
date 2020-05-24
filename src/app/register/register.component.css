@@ -1,0 +1,19 @@
+.login-content {
+    height: 100vh;
+}
+
+form {
+    width: 35rem;
+}
+.page {
+    background-image: url('../../assets/demo2.png');
+    width: 100vw;
+    height: 100vh ;
+}
+.hide {
+    display: none;
+}
+.content {
+    opacity: .6;
+    background-color: white;
+}

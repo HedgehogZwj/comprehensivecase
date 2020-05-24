@@ -1,1 +1,71 @@
-<p>score works!</p>
+<div class="page">
+    <div class="d-flex align-items-center login-content justify-content-center student">
+
+        <div class="my-0 mr-md-auto">
+            <button type="button" class="btn btn-primary" (click)="adduser()">添加学生成绩</button>
+        </div>
+        <div class="my-0 my-md-0 mr-md-1">
+            <button type="button" class="btn btn-primary" (click)="ngOnInit()">刷新列表</button>
+        </div>
+        <div class="my-1 my-md-0 mr-md-2">
+            <input class="form-control form-control-dark w-100" type="text" placeholder="请输入学号" aria-label="请输入学号"
+                id="id">
+        </div>
+        <div class="my-2 my-md-0 mr-md-2">
+            <button type="button" class="btn btn-primary" (click)="search()">搜索</button>
+        </div>
+    </div>
+    <table class="table student">
+        <thead>
+            <tr>
+                <th scope="col">序号</th>
+                <th scope="col">学号</th>
+                <th scope="col">Web</th>
+                <th scope="col">RFID</th>
+                <th scope="col">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let user of users$ | async; let i = index'>
+                <th scope="row">{{i+1}}</th>
+                <td>{{user.id}}</td>
+                <td>{{user.Web}}</td>
+                <td>{{user.RFID}}</td>
+                <td>
+                    <button type="button" class="btn btn-info operator-button" (click)="update(user.id)">修改</button>
+                    <button type="button" class="btn btn-danger operator-button" (click)="delete(user.id)">删除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="page hide">
+    <div class="d-flex align-items-center login-content justify-content-center">
+        <div class="my-0 mr-md-auto">
+            <button type="button" class="btn btn-primary" (click)="close()">返回</button>
+        </div>
+    </div>
+    <div class="d-flex updatecontent align-items-center login-content justify-content-center">
+        <form [formGroup]="myForm">
+            <h3 class="d-flex justify-content-center">学生成绩</h3>
+            <div class="form-group">
+                <label for="userid">学号</label>
+                <input type="text" class="form-control" id="userid" aria-describedby="输入用学号" name="userid"
+                    [formControl]="id" value="">
+            </div>
+            <div class="form-group">
+                <label for="Web">Web</label>
+                <input type="text" class="form-control" id="RFID" aria-describedby="输入Web成绩" name="Web"
+                    [formControl]="Web" value="">
+            </div>
+            <div class="form-group">
+                <label for="RFID">RFID</label>
+                <input type="text" class="form-control" id="RFID" name="RFID" [formControl]="RFID" value="">
+            </div>
+            <button *ngIf="command" id="submit" type="submit" class="btn btn-primary btn-block"
+                (click)="add()">添加</button>
+            <button *ngIf="!command" id="submit" type="submit" class="btn btn-primary btn-block"
+                (click)="add()">修改</button>
+        </form>
+    </div>
+</div>

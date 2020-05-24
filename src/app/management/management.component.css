@@ -1,3 +1,6 @@
 .content {
     height: 100vh;
 }
+.no {
+    text-decoration: none;
+}

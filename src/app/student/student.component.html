@@ -1,38 +1,95 @@
 <div class="page">
-    <div class="d-flex align-items-center login-content justify-content-center">
+    <div class="d-flex align-items-center login-content justify-content-center student">
 
-        <div>
-            <button type="button" class="btn btn-primary">添加用户</button>
-
+        <div class="my-0 mr-md-auto">
+            <button type="button" class="btn btn-primary" (click)="adduser()">添加用户</button>
         </div>
-        <div>
-            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-
+        <div class="my-0 my-md-0 mr-md-1">
+            <button type="button" class="btn btn-primary" (click)="ngOnInit()">刷新列表</button>
         </div>
-        <div>
-            <button type="button" class="btn btn-primary">搜索</button>
-
+        <div class="my-1 my-md-0 mr-md-2">
+            <input class="form-control form-control-dark w-100" type="text" placeholder="请输入学号" aria-label="请输入学号"
+                id="id">
+        </div>
+        <div class="my-2 my-md-0 mr-md-2">
+            <button type="button" class="btn btn-primary" (click)="search()">搜索</button>
         </div>
     </div>
+    <table class="table student">
+        <thead>
+            <tr>
+                <th scope="col">序号</th>
+                <th scope="col">学号</th>
+                <th scope="col">用户名</th>
+                <th scope="col">密码</th>
+                <th scope="col">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let user of users$ | async; let i = index'>
+                <th scope="row">{{i+1}}</th>
+                <td>{{user.id}}</td>
+                <td>{{user.userName}}</td>
+                <td>{{user.password}}</td>
+                <td>
+                    <button type="button" class="btn btn-info operator-button" (click)="update(user.id)">修改</button>
+                    <button type="button" class="btn btn-danger operator-button" (click)="delete(user.id)">删除</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-<!-- <div class="container-fluid"> -->
-<!-- <table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">序号</th>
-            <th scope="col">学号</th>
-            <th scope="col">姓名</th>
-            <th scope="col">密码</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor='let user of users$ | async; let i = index' (click)="select(user)">
-            <th scope="row">{{i}}</th>
-            <td>{{user.id}}</td>
-            <td>{{user.userName}}</td>
-            <td>{{user.password}}</td>
-        </tr>
+<div class="page hide">
+    <div class="d-flex align-items-center login-content justify-content-center">
+        <div class="my-0 mr-md-auto">
+            <button type="button" class="btn btn-primary" (click)="close()">返回</button>
+        </div>
+    </div>
+    <div class="d-flex updatecontent align-items-center login-content justify-content-center">
+        <form [formGroup]="myForm">
+            <h3 class="d-flex justify-content-center">学生用户</h3>
+            <div class="form-group">
+                <label for="userid">学号</label>
+                <input type="text" class="form-control" id="userid" aria-describedby="输入学号" name="userid"
+                    [formControl]="id" [ngClass]="{'is-invalid':id.invalid,'is-valid':id.valid}" value="">
+            </div>
+            <div class="form-group">
+                <label for="userName">用户名</label>
+                <input type="text" class="form-control" id="userName" aria-describedby="输入用户名" name="userName"
+                    [formControl]="userName" [ngClass]="{'is-invalid':userName.invalid,'is-valid':userName.valid}"
+                    value="">
 
-    </tbody>
-</table> -->
-<!-- </div> -->
+                <div class="valid-feedback">
+                    用户名格式正确！
+                </div>
+                <div class="invalid-feedback">
+                    <span *ngIf="userName.hasError('required')">
+                        用户名必须填写！
+                    </span>
+                    <span *ngIf="!userName.hasError('required')">
+                        用户名不得小于2位！
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" class="form-control" id="password" name="password" [formControl]="password"
+                    [ngClass]="{'is-invalid':password.invalid,'is-valid':password.valid}" value="">
+                <div class="valid-feedback">
+                    密码格式正确！
+                </div>
+                <div class="invalid-feedback">
+                    密码不得小于5位！
+                </div>
+            </div>
+            <button *ngIf="myForm.invalid&&command" id="submit" type="submit" class="btn btn-primary btn-block"
+                disabled>添加</button>
+            <button *ngIf="myForm.valid&&command" id="submit" type="submit" class="btn btn-primary btn-block"
+                (click)="add()">添加</button>
+            <button *ngIf="myForm.invalid&&!command" id="submit" type="submit" class="btn btn-primary btn-block"
+                disabled>修改</button>
+            <button *ngIf="myForm.valid&&!command" id="submit" type="submit" class="btn btn-primary btn-block"
+                (click)="add()">修改</button>
+        </form>
+    </div>
+</div>
